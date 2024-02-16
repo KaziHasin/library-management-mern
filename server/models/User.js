@@ -1,5 +1,6 @@
 const mongoose = require("mongoose");
 const bcrypt = require("bcryptjs");
+const Transaction = require("./Transaction");
 
 const userSchema = new mongoose.Schema(
   {
@@ -28,10 +29,14 @@ const userSchema = new mongoose.Schema(
     },
     contactNumber: { type: String },
     password: { type: String },
+    role: {
+      type: String,
+      enum: ['user', 'admin']
+    }
   },
   {
     timestamps: true,
-  }
+  },
 );
 
 // encrypt password using bcrypt
@@ -47,5 +52,18 @@ userSchema.pre("save", async function (next) {
 userSchema.methods.matchPassword = async function (password) {
   return await bcrypt.compare(password, this.password);
 };
+
+
+// delete the transactions associated with a user  
+userSchema.pre("findOneAndDelete", async function (next) {
+  const userId = this.getFilter()._id;
+
+  try {
+    await Transaction.deleteMany({ user: userId });
+    next();
+  } catch (error) {
+    next(error);
+  }
+})
 
 module.exports = mongoose.model("User", userSchema);

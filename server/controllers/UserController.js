@@ -7,7 +7,7 @@ const generateToken = require("../utils/generateToken");
  * */
 const getAllUsers = async (req, res) => {
   try {
-    const users = await User.find().sort({ _id: -1 }).select("-password");
+    const users = await User.find({ role: { $ne: "admin" } }).sort({ _id: -1 }).select("-password");
     res.status(200).json(users);
   } catch (error) {
     res.status(400).json({ error: error.message });

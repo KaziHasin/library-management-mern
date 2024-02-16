@@ -6,7 +6,7 @@ const Transaction = require("../models/Transaction");
  * */
 const getAllTransactions = async (req, res) => {
   try {
-    const transactions = await Transaction.find()
+    const transactions = await Transaction.find().sort({ _id: -1 })
       .populate("user")
       .populate("book");
     res.status(200).json(transactions);
