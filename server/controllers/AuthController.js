@@ -1,5 +1,6 @@
 const User = require("../models/User");
 const generateToken = require("../utils/generateToken");
+const generateUserToken = require("../utils/generateUserToken");
 
 /**
  * admin login functionality
@@ -45,10 +46,10 @@ const adminLogout = (req, res) => {
 const userLogin = async (req, res) => {
   const { email } = req.body;
 
-  const user = await User.findOne({ email });
+  const user = await User.findOne({ email, role: 'user' });
 
   if (user) {
-    generateToken(res, user._id);
+    generateUserToken(res, user._id);
 
     res.status(200).json({
       _id: user._id,
@@ -65,7 +66,7 @@ const userLogin = async (req, res) => {
  * @api POST api/auth/user/logout
  * */
 const userLogout = (req, res) => {
-  res.clearCookie("jwtToken", {
+  res.clearCookie("userToken", {
     httpOnly: true,
     secure: process.env.NODE_ENV !== "development",
     sameSite: "strict",

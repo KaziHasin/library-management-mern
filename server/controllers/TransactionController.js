@@ -15,6 +15,22 @@ const getAllTransactions = async (req, res) => {
   }
 };
 
+
+/**
+ * get all login user's the transactions
+ * @api GET api/transactions/user-transaction
+ * */
+const getUserTransactions = async (req, res) => {
+  try {
+    const userId = req.userId;
+    const transactions = await Transaction.find({ user: userId }).sort({ _id: -1 })
+      .populate('book');
+    res.status(200).json(transactions);
+  } catch (error) {
+    res.status(400).json({ error: error.message });
+  }
+};
+
 /**
  * add a transaction to the resources
  * @api POST api/transactions
@@ -92,6 +108,7 @@ const deleteTransaction = async (req, res) => {
 
 module.exports = {
   getAllTransactions,
+  getUserTransactions,
   addTransaction,
   getTransaction,
   updateTransaction,
