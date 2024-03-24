@@ -1,4 +1,4 @@
-import React,{ useEffect } from 'react';
+import React, { useEffect } from 'react';
 import { useSelector, useDispatch } from 'react-redux';
 import { Container, Row, Breadcrumb, Card, Button, Col } from 'react-bootstrap';
 import { FaPlus } from 'react-icons/fa';
@@ -13,7 +13,6 @@ import { toast } from 'react-toastify';
 const UsersList = React.memo(() => {
   const dispatch = useDispatch();
   const users = useSelector(selectUsers);
-  console.log(users);
   const successMessage = useSelector(selectSuccessMessage);
 
   const { data: fetchedUsers, error, isLoading } = useGetUsersQuery();
@@ -26,28 +25,28 @@ const UsersList = React.memo(() => {
       });
     }
   }, [fetchedUsers, dispatch]);
-  
+
   useEffect(() => {
     if (successMessage) {
-     toast.success(successMessage);
+      toast.success(successMessage);
       dispatch(setSuccessMessage(null));
     }
   }, [successMessage]);
 
   if (isLoading) {
 
-   return(
-     <div className="loading">
-      <Loader/>
-     </div>
-    ) 
+    return (
+      <div className="loading">
+        <Loader />
+      </div>
+    )
   }
 
   if (error) {
     return (
       <div className="alert alert-danger d-flex align-items-center" role="alert">
-      <strong>Error! </strong> {error.status === 401 ? 'Login required...' :'An unexpected error occurred....' }
-    </div>
+        <strong>Error! </strong> {error.status === 401 ? 'Login required...' : 'An unexpected error occurred....'}
+      </div>
     )
   }
 

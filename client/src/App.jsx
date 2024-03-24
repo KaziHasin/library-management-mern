@@ -1,14 +1,9 @@
-import React, {useState, useEffect} from 'react'
-import BookList from './components/BookList';
-import UserHeader from './components/UserHeader';
-import { BrowserRouter as Router, Routes, Route,Navigate } from "react-router-dom";
-import TransactionHistory from './components/TransactionHistory';
-import Login from './components/Login';
-import AdminLogin from './components/admin/AdminLogin';
-import AdminLayout from './components/admin/AdminLayout';
-import NotFoundPage from './components/NotFoundPage';
+import React, { useState, useEffect } from 'react'
+
 import { ToastContainer } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
+
+import { CustomRouter } from './routes/CustomRouter';
 
 
 const App = () => {
@@ -16,24 +11,24 @@ const App = () => {
   const [transactions, setTransactions] = useState([])
 
   const bookList = [
-      {
-          id: 1,
+    {
+      id: 1,
       title: "Test",
       author: "Kazi Hasin",
       currentAvailability: true,
-      },
-      {
-          id: 2,
+    },
+    {
+      id: 2,
       title: "Test 2",
       author: "Rohan Das",
       currentAvailability: false
-      },
-      {
-          id: 3,
+    },
+    {
+      id: 3,
       title: "Test 3",
       author: "Kololl Das",
       currentAvailability: true
-      },
+    },
   ];
 
   const transactionList = [
@@ -62,41 +57,19 @@ const App = () => {
       transactionType: "returned",
     },
   ];
-      
+
   useEffect(() => {
     setBooks(bookList)
     setTransactions(transactionList)
-  
+
   }, [])
-  
+
 
   return (
-    <Router>
+    <>
       <ToastContainer />
-    <Routes>
-      <Route
-        path="/"
-        element={
-        <>
-        <UserHeader />
-        <BookList books={books} />
-        </>}
-      />
-      <Route
-        path="/transaction-history"
-        element={
-        <><UserHeader/> <TransactionHistory transactions={transactions} /></>}
-        
-      />
-      <Route path='/login' element={<><UserHeader/><Login/></>}
-      />
-      <Route path='/admin' element={<AdminLogin/>}
-      />
-      <Route path='/dashboard/*' element={<AdminLayout/>}
-      />
-       <Route path="*" element={<NotFoundPage/>} />
-    </Routes>
-  </Router>
+      <CustomRouter books={books} transactions={transactions} />
+    </>
   )
 }
 
