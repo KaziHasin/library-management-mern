@@ -4,7 +4,7 @@ import { selectUserTransactions, setTransactions } from '../slices/userTransacti
 import { useDispatch, useSelector } from 'react-redux';
 import { useGetTransactionQuery } from '../slices/api/UserTransactionApiSlice';
 
-const TransactionHistory = ({ }) => {
+const TransactionHistory = () => {
   const transactions = useSelector((selectUserTransactions));
   const dispatch = useDispatch();
 

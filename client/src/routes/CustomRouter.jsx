@@ -8,7 +8,9 @@ import AdminLogin from '../components/admin/AdminLogin';
 import AdminLayout from '../components/admin/AdminLayout';
 import NotFoundPage from '../components/NotFoundPage';
 import FrontPrivateRoute from '../components/FrontPrivateRoute';
-export const CustomRouter = ({ books, transactions }) => {
+import BookDetails from '../components/BookDetails';
+export const CustomRouter = () => {
+
     return (
         <Router>
             <Routes>
@@ -17,11 +19,19 @@ export const CustomRouter = ({ books, transactions }) => {
                     element={
                         <>
                             <UserHeader />
-                            <BookList books={books} />
+                            <BookList />
+                        </>}
+                />
+                <Route
+                    path="/book/:id"
+                    element={
+                        <>
+                            <UserHeader />
+                            <BookDetails />
                         </>}
                 />
                 <Route path='/' element={<FrontPrivateRoute />}>
-                    <Route path="/transaction-history" element={<><UserHeader /> <TransactionHistory transactions={transactions} /></>} />
+                    <Route path="/transaction-history" element={<><UserHeader /> <TransactionHistory /></>} />
                 </Route>
 
                 <Route path='/login' element={<><UserHeader /><Login /></>}

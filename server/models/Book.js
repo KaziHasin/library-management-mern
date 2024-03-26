@@ -13,7 +13,12 @@ const bookSchema = new mongoose.Schema({
     trim: true,
     minlength: [3, "Author name at least two character"],
   },
+  category: { type: String, default: "un_category" },
   currentAvailability: { type: Boolean, default: true },
+  stocks: {
+    type: Number,
+    required: [true, 'Number of stocks is required']
+  }
 });
 
 module.exports = mongoose.model("Book", bookSchema);
