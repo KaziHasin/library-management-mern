@@ -2,9 +2,9 @@ import React, { useState, useEffect } from 'react'
 import { Container, Row, Col } from 'react-bootstrap'
 import Book from './Book'
 import { useDispatch, useSelector } from 'react-redux'
-import { selectBooks, setBooks } from '../slices/booksSlice'
-import { useGetBookListQuery } from '../slices/api/BooksApiSlice'
-import Loader from './utils/Loader'
+import { selectBooks, setBooks } from '../../slices/booksSlice'
+import { useGetBookListQuery } from '../../slices/api/BooksApiSlice'
+import Loader from '../utils/Loader'
 
 
 const BookList = () => {
@@ -34,7 +34,7 @@ const BookList = () => {
       <Row>
         {isLoading ? <Loader /> : <>
           {books.map((book) => (
-            <Col key={book._id} className="mb-3" sm={6} md={4} lg={3}>
+            <Col key={book._id} className="mb-3" sm={6} md={4} lg={4}>
               <Book book={book} />
             </Col>
           ))}

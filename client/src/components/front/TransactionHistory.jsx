@@ -1,8 +1,8 @@
 import { useEffect, useState } from 'react';
 import { Badge, Card, Container, Table } from 'react-bootstrap';
-import { selectUserTransactions, setTransactions } from '../slices/userTransactionSlice';
+import { selectUserTransactions, setTransactions } from '../../slices/userTransactionSlice';
 import { useDispatch, useSelector } from 'react-redux';
-import { useGetTransactionQuery } from '../slices/api/UserTransactionApiSlice';
+import { useGetTransactionQuery } from '../../slices/api/UserTransactionApiSlice';
 
 const TransactionHistory = () => {
   const transactions = useSelector((selectUserTransactions));

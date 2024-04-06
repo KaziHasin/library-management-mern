@@ -10,8 +10,8 @@ const Book = ({ book }) => {
         <Card.Img variant="top" src="images/closed-book.png" style={{ width: "100%", height: "300px" }} />
         <Card.Body className="mt-2">
           <Card.Title className="text-center d-flex justify-content-between">
-            {book.name}
-            <Badge bg={`${book.currentAvailability ? 'success' : 'danger'}`} className="pb-2">{book.currentAvailability ? "Available" : "Not Available"}</Badge>
+            <h5>     {book.name}</h5>
+            <div> <Badge bg={`${book.currentAvailability ? 'success' : 'danger'}`} className="pb-2">{book.currentAvailability ? "Available" : "Not Available"}</Badge></div>
           </Card.Title>
 
 

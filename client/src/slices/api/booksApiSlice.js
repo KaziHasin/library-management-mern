@@ -2,12 +2,12 @@ import { apiSlice } from "../apiSlice";
 const BOOKS_URL = `/api/books`
 
 export const booksApiSlice = apiSlice.injectEndpoints({
-    endpoints: (builder) => ({
-        getBookList: builder.query({
+    endpoints: (build) => ({
+        getBookList: build.query({
             query: () => BOOKS_URL,
         }),
 
-        getBookById: builder.mutation({
+        getBookById: build.mutation({
             query: (id) => ({
                 url: `${BOOKS_URL}/${id}`,
                 method: "GET",

@@ -3,8 +3,8 @@ import { Container, InputGroup, Form, Card, Row, Col, Button } from 'react-boots
 import { useNavigate } from 'react-router-dom'
 import { toast } from 'react-toastify'
 import { useSelector, useDispatch } from 'react-redux'
-import { useUserLoginMutation } from '../slices/api/userAuthApiSlice';
-import { setUserLogin } from '../slices/userAuthSlice';
+import { useUserLoginMutation } from '../../slices/api/userAuthApiSlice';
+import { setUserLogin } from '../../slices/userAuthSlice';
 const Login = () => {
 
   const [email, setEmail] = useState('');

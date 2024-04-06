@@ -3,11 +3,11 @@ import { Navbar, Nav, Container } from 'react-bootstrap';
 import { FaSignInAlt, FaSignOutAlt } from 'react-icons/fa';
 import { Link, useLocation, useNavigate } from 'react-router-dom';
 import { useDispatch, useSelector } from 'react-redux';
-import { useUserLogoutMutation } from '../slices/api/userAuthApiSlice';
-import { setUserLogout } from '../slices/userAuthSlice';
+import { useUserLogoutMutation } from '../../slices/api/userAuthApiSlice';
+import { setUserLogout } from '../../slices/userAuthSlice';
 import { toast } from 'react-toastify';
 
-const UserHeader = () => {
+const FrontHeader = () => {
   const { userInfo } = useSelector((state) => state.userAuth);
   const location = useLocation();
   const isTransactionHistory = location.pathname === '/transaction-history';
@@ -54,4 +54,4 @@ const UserHeader = () => {
   );
 }
 
-export default UserHeader;
+export default FrontHeader;
