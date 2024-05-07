@@ -28,7 +28,6 @@ const Login = () => {
     try {
 
       const res = await userLogin({ email });
-      console.log();
       if (res.error !== undefined && res.error.status == 401) {
         toast.error(res.error.data);
         return

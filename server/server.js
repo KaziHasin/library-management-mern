@@ -13,6 +13,9 @@ const connectionString = process.env.MONGO_URI;
 const connectDB = require("./db/connect");
 const notFound = require("./middleware/notFound");
 const errorHandling = require("./middleware/errorHandling");
+const path = require("path");
+
+app.use("/uploads", express.static(path.join(__dirname, "uploads")));
 
 // middleware
 app.use(cors());

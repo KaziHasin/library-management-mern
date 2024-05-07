@@ -1,6 +1,7 @@
 import { configureStore } from "@reduxjs/toolkit";
 import userReducer from "./slices/userSlice";
 import authReducer from "./slices/authSlice";
+import authProfileReducer from "./slices/authProfileSlice";
 import userAuthReducer from "./slices/userAuthSlice";
 import userTransactionSlice from "./slices/userTransactionSlice";
 import booksSlice from "./slices/booksSlice";
@@ -10,6 +11,7 @@ const store = configureStore({
   reducer: {
     user: userReducer,
     auth: authReducer,
+    adminProfile: authProfileReducer,
     userAuth: userAuthReducer,
     userTransactions: userTransactionSlice,
     books: booksSlice,

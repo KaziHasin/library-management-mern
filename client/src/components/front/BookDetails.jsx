@@ -30,6 +30,10 @@ const BookDetails = () => {
 
     }
 
+    const convertCapitalize = (category) => {
+        return category.charAt(0).toUpperCase() + category.slice(1);
+    }
+
     return (
         <Container className="mt-3">
             <Row>
@@ -59,7 +63,7 @@ const BookDetails = () => {
                                                     </tr>
                                                     <tr>
                                                         <td>Category</td>
-                                                        <td>{book.data.book.category.replace('_', ' ')}</td>
+                                                        <td>{convertCapitalize(book.data.book.category.replace('_', ' '))}</td>
                                                     </tr>
                                                     <tr>
                                                         <td>Author</td>

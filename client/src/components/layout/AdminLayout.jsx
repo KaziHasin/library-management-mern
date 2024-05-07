@@ -9,6 +9,7 @@ import UsersList from '../admin/users/UsersList';
 import UserAdd from '../admin/users/UserAdd';
 import UserEdit from '../admin/users/UserEdit';
 import PrivateRoutes from '../admin/PrivateRoutes';
+import AdminProfile from '../admin/AdminProfile';
 
 
 const AdminLayout = () => {
@@ -34,6 +35,7 @@ const AdminLayout = () => {
             <Routes>
               <Route element={<PrivateRoutes />}>
                 <Route path="/" element={<AdminDashboard />} />
+                <Route path="/profile/:id" element={<AdminProfile />} />
                 <Route path="/users" element={<UsersList />} />
                 <Route path="/users/add" element={<UserAdd />} />
                 <Route path="/users/edit/:id" element={<UserEdit />} />

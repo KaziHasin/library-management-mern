@@ -10,23 +10,24 @@ import { toast } from 'react-toastify';
 
 
 const AdminHeader = ({ handleSidebar }) => {
-   
+
   const navigate = useNavigate();
   const dispatch = useDispatch();
-  const {adminInfo} = useSelector((state) => state.auth);
+  const { adminInfo } = useSelector((state) => state.auth);
+  const id = adminInfo._id;
   const [Logout] = useLogoutMutation();
 
   const handleLogout = async (event) => {
     event.preventDefault();
-     try {
+    try {
       const res = await Logout().unwrap();
       console.log(res);
       dispatch(setLogout())
       navigate('/admin');
-     } catch (error) {
+    } catch (error) {
       console.log(error);
       toast.error("Failed to logout please try later....");
-     }
+    }
   }
   return (
     <Navbar expand="lg" className="text-dark shadow-sm">
@@ -36,17 +37,17 @@ const AdminHeader = ({ handleSidebar }) => {
           Library Management
         </Navbar.Brand>
         <Nav className='ms-auto d-flex align-items-center'>
-            {adminInfo &&
-           <>
-            <FaUserCircle />
-            <NavDropdown title={adminInfo.name} id='username'>
-              <NavDropdown.Item><FaUserLock/> Profile</NavDropdown.Item>
-              <NavDropdown.Item onClick={handleLogout}>
-              <FaSignOutAlt/> Logout
-              </NavDropdown.Item>
+          {adminInfo &&
+            <>
+              <FaUserCircle />
+              <NavDropdown title={adminInfo.name} id='username'>
+                <NavDropdown.Item as={Link} to={`/dashboard/profile/${id}`}><FaUserLock /> Profile</NavDropdown.Item>
+                <NavDropdown.Item onClick={handleLogout}>
+                  <FaSignOutAlt /> Logout
+                </NavDropdown.Item>
               </NavDropdown>
             </>
-            }
+          }
         </Nav>
       </Container>
     </Navbar>
