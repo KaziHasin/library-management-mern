@@ -6,9 +6,10 @@ import { useGetProfileMutation, useUpdateProfileMutation, useUpdateProfilePictur
 import { setAdminProfile } from '../../slices/authProfileSlice';
 import { FaCamera } from "react-icons/fa";
 import './adminProfile.css';
-import { toast } from 'react-toastify';
 
-const AdminProfile = () => {
+import withToast from '../../hoc/withToast';
+
+const AdminProfile = ({ showSuccess, showError }) => {
     const [imagePreview, setImagePreview] = useState("/images/default-fallback-image.png");
     const [formData, setFormData] = useState({
         username: "",
@@ -80,8 +81,20 @@ const AdminProfile = () => {
     const submitHandler = async (e) => {
         e.preventDefault();
         try {
+
             const res = await updateProfile({ id, data: formData });
-            toast.success(res.data.message);
+            if (res.data && res.data.status === 'success') {
+                showSuccess(res.data.message)
+            } else {
+                const validationErrors = res.error?.data;
+                Object.keys(validationErrors).forEach((field) => {
+                    let errorMessage = validationErrors[field];
+                    const colonIndex = errorMessage.indexOf(':');
+                    errorMessage = errorMessage.slice(colonIndex + 1).trim().replace(',', '');
+                    showError(errorMessage);
+                })
+
+            }
         } catch (error) {
             console.log(error);
         }
@@ -145,4 +158,4 @@ const AdminProfile = () => {
     )
 }
 
-export default AdminProfile
+export default withToast(AdminProfile)
