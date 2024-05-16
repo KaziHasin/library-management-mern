@@ -1,10 +1,10 @@
 import React, { useEffect, useState } from 'react';
 import { Link, useNavigate } from 'react-router-dom';
 import { Container, InputGroup, Form, Card, Row, Col, Button, Toast } from 'react-bootstrap';
-import { useLoginMutation } from '../../slices/api/authApiSlice';
+import { useLoginMutation } from '../../../../slices/api/authApiSlice';
 import { toast } from 'react-toastify';
 import { useDispatch, useSelector } from 'react-redux';
-import { setLogin } from '../../slices/authSlice';
+import { setLogin } from '../../../../slices/authSlice';
 
 
 const AdminLogin = () => {

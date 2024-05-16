@@ -3,13 +3,13 @@ import Container from 'react-bootstrap/Container';
 import { Row, Col } from 'react-bootstrap'
 import { Route, Routes } from 'react-router-dom';
 import AdminHeader from './AdminHeader';
-import AdminSidebar from '../admin/AdminSidebar';
-import AdminDashboard from '../admin/dashboard/AdminDashboard';
-import UsersList from '../admin/users/UsersList';
-import UserAdd from '../admin/users/UserAdd';
-import UserEdit from '../admin/users/UserEdit';
-import PrivateRoutes from '../admin/PrivateRoutes';
-import AdminProfile from '../admin/AdminProfile';
+import AdminSidebar from './AdminSideBar';
+import AdminDashboard from '../pages/adminPanel/dashboard/AdminDashboard';
+import UsersList from '../pages/adminPanel/users/UsersList';
+import UserAdd from '../pages/adminPanel/users/UserAdd';
+import UserEdit from '../pages/adminPanel/users/UserEdit';
+import PrivateRoutes from '../privates/AdminPanelPrivateRoutes';
+import AdminProfile from '../pages/adminPanel/admin/AdminProfile';
 
 
 const AdminLayout = () => {

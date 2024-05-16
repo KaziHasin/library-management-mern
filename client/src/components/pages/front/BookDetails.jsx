@@ -2,8 +2,8 @@ import React, { useEffect } from 'react'
 import { Badge, Button, Card, Col, Container, Row, Table } from 'react-bootstrap';
 import { useDispatch, useSelector } from 'react-redux';
 import { useParams } from 'react-router-dom'
-import { useGetBookByIdMutation } from '../../slices/api/BooksApiSlice';
-import { setSingleBook, singleBook } from '../../slices/booksSlice';
+import { useGetBookByIdMutation } from '../../../slices/api/BooksApiSlice';
+import { setSingleBook, singleBook } from '../../../slices/booksSlice';
 
 
 const BookDetails = () => {

@@ -3,9 +3,10 @@ import { FaArrowLeft } from 'react-icons/fa';
 import UserForm from './UserForm';
 import { Link, useParams, useNavigate } from 'react-router-dom';
 import { useSelector, useDispatch } from "react-redux";
-import { useUpdateUserMutation } from '../../../slices/api/userApiSlice';
-import { selectUserById, updateStoreUser, setSuccessMessage } from '../../../slices/userSlice';
+import { useUpdateUserMutation } from '../../../../slices/api/userApiSlice';
+import { selectUserById, updateStoreUser, setSuccessMessage } from '../../../../slices/userSlice';
 import { toast } from 'react-toastify';
+import Heading from '../../../layout/Heading';
 
 
 const UserEdit = () => {
@@ -57,23 +58,11 @@ const UserEdit = () => {
   }
   return (
     <>
-      <Breadcrumb>
-        <Breadcrumb.Item>Dashboard</Breadcrumb.Item>
-        <Breadcrumb.Item>Users</Breadcrumb.Item>
-        <Breadcrumb.Item>Edit</Breadcrumb.Item>
-      </Breadcrumb>
+      <Heading heading="Users" breadcrumb={<span>Dashboard <span className='fs-4'>&#8250;</span> Users <span className='fs-4'>&#8250;</span> Edit</span>} />
+      <Container className='px-md-2'>
 
-      <Container className='px-md-5'>
-        <Row className="my-4">
-          <Col>
-            <h4 className="mb-0">Users</h4>
-          </Col>
-          <Col>
-            <Button variant="dark" as={Link} to="/dashboard/users" className="float-end"><FaArrowLeft /> Back</Button>
-          </Col>
-        </Row>
         <Row>
-          <Card className="shadow-sm border-0 py-4 px-3">
+          <Card className="shadow-sm border-0 pt-4 pb-2 px-3">
             <UserForm onSubmit={handleUpdateUser} user={user} buttonText="Update User" />
           </Card>
         </Row>

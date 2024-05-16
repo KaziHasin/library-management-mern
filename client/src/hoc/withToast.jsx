@@ -4,7 +4,6 @@ import 'react-toastify/dist/ReactToastify.css';
 
 const withToast = (WrappedComponent) => {
     const enhanceComponent = (props) => {
-        console.log(WrappedComponent);
         const showSuccess = (message) => {
             toast.success(message);
         };

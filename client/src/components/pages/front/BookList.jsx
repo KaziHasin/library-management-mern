@@ -2,9 +2,9 @@ import React, { useState, useEffect } from 'react'
 import { Container, Row, Col } from 'react-bootstrap'
 import Book from './Book'
 import { useDispatch, useSelector } from 'react-redux'
-import { selectBooks, setBooks } from '../../slices/booksSlice'
-import { useGetBookListQuery } from '../../slices/api/BooksApiSlice'
-import Loader from '../utils/Loader'
+import { selectBooks, setBooks } from '../../../slices/booksSlice'
+import { useGetBookListQuery } from '../../../slices/api/BooksApiSlice'
+import Loader from '../../utils/Loader'
 
 
 const BookList = () => {

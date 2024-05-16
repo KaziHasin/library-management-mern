@@ -50,6 +50,7 @@ const AdminHeader = ({ handleSidebar }) => {
           }
         </Nav>
       </Container>
+
     </Navbar>
   );
 };

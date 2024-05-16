@@ -1,4 +1,5 @@
 import { configureStore } from "@reduxjs/toolkit";
+import messageReducer from "./slices/messageSlice"
 import userReducer from "./slices/userSlice";
 import authReducer from "./slices/authSlice";
 import authProfileReducer from "./slices/authProfileSlice";
@@ -9,6 +10,7 @@ import { apiSlice } from "./slices/apiSlice";
 
 const store = configureStore({
   reducer: {
+    message: messageReducer,
     user: userReducer,
     auth: authReducer,
     adminProfile: authProfileReducer,

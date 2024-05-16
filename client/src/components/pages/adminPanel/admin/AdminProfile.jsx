@@ -1,13 +1,13 @@
 import React, { useEffect, useState } from 'react'
 import { Button, Card, Col, Container, Form, Row } from 'react-bootstrap';
 import { useDispatch, useSelector } from 'react-redux';
-import { useParams } from 'react-router-dom'
-import { useGetProfileMutation, useUpdateProfileMutation, useUpdateProfilePictureMutation } from '../../slices/api/authApiSlice';
-import { setAdminProfile } from '../../slices/authProfileSlice';
+import { Link, useParams } from 'react-router-dom'
+import { useGetProfileMutation, useUpdateProfileMutation, useUpdateProfilePictureMutation } from '../../../../slices/api/authApiSlice';
+import { setAdminProfile } from '../../../../slices/authProfileSlice';
 import { FaCamera } from "react-icons/fa";
 import './adminProfile.css';
-
-import withToast from '../../hoc/withToast';
+import withToast from '../../../../hoc/withToast';
+import Heading from '../../../layout/Heading';
 
 const AdminProfile = ({ showSuccess, showError }) => {
     const [imagePreview, setImagePreview] = useState("/images/default-fallback-image.png");
@@ -102,9 +102,9 @@ const AdminProfile = ({ showSuccess, showError }) => {
 
     return (
         <Container>
-
+            <Heading heading="Admin Profile" breadcrumb={<span>Dashboard <span className='fs-4'>&#8250;</span> Profile</span>} />
             <Card className='border-0 rounded-1 p-4'>
-                <Card.Title>Admin Profile</Card.Title>
+
                 <Card.Body>
 
                     <Form onSubmit={submitHandler} className="p-3 pt-1">
@@ -143,7 +143,10 @@ const AdminProfile = ({ showSuccess, showError }) => {
                                 </Form.Group>
                             </Col>
 
-                            <Col>
+                            <Col className="text-center">
+                                <Button variant="dark" as={Link} to="/dashboard" className="w-auto me-2">
+                                    Back
+                                </Button>
                                 <Button type="submit">Update</Button>
                             </Col>
                         </Row>

@@ -1,26 +1,27 @@
 import React, { useState } from 'react';
-import { Row, Col, Breadcrumb} from 'react-bootstrap'
+import { Row, Col, Breadcrumb, Card } from 'react-bootstrap'
 import { FaBook, FaUserAlt } from 'react-icons/fa';
 import { GrTransaction } from "react-icons/gr";
 import DashboardItems from './DashboardItems';
+import Heading from '../../../layout/Heading';
 
 const cardItem = [
   {
     id: 1,
     item: "Users",
-    icon: <FaUserAlt/>,
+    icon: <FaUserAlt />,
     link: "/dashboard/users"
   },
   {
     id: 2,
     item: "Books",
-    icon: <FaBook/>,
+    icon: <FaBook />,
     link: "/dashboard/books"
   },
   {
     id: 3,
     item: "Transactions",
-    icon: <GrTransaction/>,
+    icon: <GrTransaction />,
     link: "/dashboard/transactions"
   },
 ];
@@ -29,23 +30,23 @@ const AdminDashboard = () => {
 
   const [items, setItems] = useState(cardItem)
   return (
-    
-      <>
-      <h4>Welcome to the Admin Dashboard</h4>
-      <Breadcrumb>
-      <Breadcrumb.Item>Dashboard</Breadcrumb.Item>
-      </Breadcrumb>
-        <Row className="m-md-5">
-        {items.map((item) => (
-         <Col key={item.id} className="mb-3" md={6} lg={4}>      
-               <DashboardItems item={item} />
-          </Col>
-        ))}
-      </Row>
-       
-    
-     </>
-  
+
+    <>
+      <Heading heading="Admin Dashboard" breadcrumb="Dashboard" />
+      <Card className="shadow-sm border-0 pt-4 pb-2 px-3 py-3">
+        <Row>
+          {items.map((item) => (
+            <Col key={item.id} className="mb-3" md={6} lg={4}>
+              <DashboardItems item={item} />
+            </Col>
+          ))}
+        </Row>
+
+      </Card>
+
+
+    </>
+
   );
 };
 

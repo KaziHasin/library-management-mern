@@ -5,44 +5,37 @@ import { Link } from "react-router-dom"
 import 'jquery/dist/jquery.min.js';
 import "datatables.net-dt/js/dataTables.dataTables"
 import "datatables.net-dt/css/jquery.dataTables.min.css"
-import $ from 'jquery'; 
+import $ from 'jquery';
 import { useDispatch } from "react-redux";
-import { useDeleteUserMutation } from '../../../slices/api/userApiSlice';
-import { deleteStoreUser, setSuccessMessage } from '../../../slices/userSlice';
+import { useDeleteUserMutation } from '../../../../slices/api/userApiSlice';
+import { deleteStoreUser, setSuccessMessage } from '../../../../slices/userSlice';
 import { toast } from 'react-toastify';
 
 const UserTable = ({ users }) => {
 
   const dispatch = useDispatch();
 
-  const [ deleteUser, {isLoading }] = useDeleteUserMutation();
+  const [deleteUser, { isLoading }] = useDeleteUserMutation();
 
-  useEffect(() => {
-    $(document).ready(function () {
-      setTimeout(function(){
-      $('#userDataTable').DataTable();
-       } ,1000);
-  });
-  }, [users]);
 
   const deleteUserHandler = async (userId) => {
-     
-    if(confirm("Are you sure want to delete this user?")) {
-      
-     try {
-      const res = await deleteUser(userId);
 
-      if (res.data && res.data.status === 'success') {
-        const message = res.data.message;
-        dispatch(setSuccessMessage(message));
-        dispatch(deleteStoreUser({id: userId}));
-      }else {
+    if (confirm("Are you sure want to delete this user?")) {
+
+      try {
+        const res = await deleteUser(userId);
+
+        if (res.data && res.data.status === 'success') {
+          const message = res.data.message;
+          dispatch(setSuccessMessage(message));
+          dispatch(deleteStoreUser({ id: userId }));
+        } else {
+          toast.error('An error occurred. Please try again.');
+        }
+      } catch (error) {
+        console.log(error);
         toast.error('An error occurred. Please try again.');
       }
-     } catch (error) {
-      console.log(error);
-      toast.error('An error occurred. Please try again.');
-     }
 
     }
 
@@ -50,7 +43,7 @@ const UserTable = ({ users }) => {
 
 
   return (
-    <Table id="userDataTable" responsive striped bordered hover>
+    <Table responsive striped bordered hover>
       <thead>
         <tr>
           <th>#</th>

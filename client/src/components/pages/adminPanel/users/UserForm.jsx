@@ -1,5 +1,6 @@
 import { useEffect, useState } from 'react';
 import { Row, Col, Form, Button } from 'react-bootstrap';
+import { Link } from 'react-router-dom';
 
 const UserForm = ({ onSubmit, user, buttonText }) => {
   const initialFormData = {
@@ -50,7 +51,7 @@ const UserForm = ({ onSubmit, user, buttonText }) => {
             name="username"
             value={formData.username}
             onChange={handleChange}
-            
+
           />
           <Form.Control.Feedback type="invalid">Please provide a username.</Form.Control.Feedback>
         </Form.Group>
@@ -62,7 +63,7 @@ const UserForm = ({ onSubmit, user, buttonText }) => {
             name="name"
             value={formData.name}
             onChange={handleChange}
-            
+
           />
           <Form.Control.Feedback type="invalid">Please provide a name.</Form.Control.Feedback>
         </Form.Group>
@@ -76,7 +77,7 @@ const UserForm = ({ onSubmit, user, buttonText }) => {
             name="email"
             value={formData.email}
             onChange={handleChange}
-            
+
           />
           <Form.Control.Feedback type="invalid">Please provide a valid email.</Form.Control.Feedback>
         </Form.Group>
@@ -88,13 +89,16 @@ const UserForm = ({ onSubmit, user, buttonText }) => {
             name="contactNumber"
             value={formData.contactNumber}
             onChange={handleChange}
-            
+
           />
           <Form.Control.Feedback type="invalid">Please provide a valid phone number.</Form.Control.Feedback>
         </Form.Group>
       </Row>
-      <Row className="mt-2 float-end mx-2">
-        <Button type="submit" className="float-end w-auto">
+      <Row className="mt-2 mx-2 float-end">
+        <Button variant="dark" as={Link} to="/dashboard/users" className="w-auto me-2">
+          Back
+        </Button>
+        <Button type="submit" className="w-auto">
           {buttonText ?? 'Add User'}
         </Button>
       </Row>
