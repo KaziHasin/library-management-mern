@@ -1,29 +1,36 @@
-import React, { useEffect } from 'react';
-import { useSelector, useDispatch } from 'react-redux';
-import { Container, Row, Breadcrumb, Card, Button, Col, CardHeader } from 'react-bootstrap';
+import React, { useEffect, useState } from 'react';
+import { Button, Card, Col, Container, Row } from 'react-bootstrap';
 import { FaPlus } from 'react-icons/fa';
+import { useDispatch, useSelector } from 'react-redux';
 import { Link } from 'react-router-dom';
-import UserTable from './UserTable';
+import withToast from '../../../../hoc/withToast';
 import { useGetUsersQuery } from '../../../../slices/api/userApiSlice';
 import { resetMessage } from '../../../../slices/messageSlice';
-import { addUser, selectUsers, resetUsers, } from '../../../../slices/userSlice';
-import Loader from '../../../utils/Loader';
-import withToast from '../../../../hoc/withToast';
+import { setTotalData, setTotalPages } from '../../../../slices/paginationHelperSlice';
+import { addUser, resetUsers, selectUsers, } from '../../../../slices/userSlice';
 import Heading from '../../../layout/Heading';
+import CustomPagination from '../../../utils/CustomPagination';
+import Loader from '../../../utils/Loader';
+import UserTable from './UserTable';
 
 
 const UsersList = ({ showSuccess }) => {
+
+  const [currentPage, setCurrentPage] = useState(1);
+  const [itemsPerPage, setItemsPerPage] = useState(5);
+
   const dispatch = useDispatch();
   const users = useSelector(selectUsers);
-
   const message = useSelector((state) => state.message.message)
 
-  const { data: fetchedUsers, error, isLoading } = useGetUsersQuery();
+  const { data: fetchedUsers, error, isLoading } = useGetUsersQuery(currentPage);
 
   useEffect(() => {
     if (fetchedUsers) {
       dispatch(resetUsers());
-      fetchedUsers.forEach((user) => {
+      dispatch(setTotalPages({ totalPages: fetchedUsers.totalPages }))
+      dispatch(setTotalData({ totalData: fetchedUsers.totalUsers }))
+      fetchedUsers.users.forEach((user) => {
         dispatch(addUser(user));
       });
     }
@@ -36,15 +43,19 @@ const UsersList = ({ showSuccess }) => {
     }
   }, [dispatch, message]);
 
-  if (isLoading) {
 
+  const handlePageChange = (pageNumber) => {
+    setCurrentPage(pageNumber);
+    console.log(`Fetching data for page ${currentPage}`);
+  }
+
+  if (isLoading) {
     return (
       <div className="loading">
         <Loader />
       </div>
     )
   }
-
   if (error) {
     return (
       <div className="alert alert-danger d-flex align-items-center" role="alert">
@@ -61,10 +72,7 @@ const UsersList = ({ showSuccess }) => {
         <Heading heading="Users" breadcrumb={<span>Dashboard <span className='fs-4'>&#8250;</span> Users</span>} />
 
         <Card className="shadow-sm border-0 pt-4 pb-2 px-3">
-          <Row className="my-4">
-            <Col>
-
-            </Col>
+          <Row className="my-2">
             <Col>
               <Button variant="primary" as={Link} to="/dashboard/users/add" className="float-end">
                 <FaPlus /> Add
@@ -73,8 +81,8 @@ const UsersList = ({ showSuccess }) => {
           </Row>
           <Row>
 
-            <UserTable users={users} />
-
+            <UserTable users={users} currentPage={currentPage} itemsPerPage={itemsPerPage} />
+            <CustomPagination onPageChange={handlePageChange} currentPage={currentPage} itemsPerPage={itemsPerPage} />
           </Row>
         </Card>
       </Container>

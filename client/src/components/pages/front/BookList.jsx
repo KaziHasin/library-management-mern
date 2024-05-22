@@ -28,7 +28,7 @@ const BookList = () => {
     <Container className="mt-3">
       <Row className="mb-3">
         <Col className="col-md-4">
-          <h2 className="text-center">Library Catalog</h2>
+          <h2 className="text-center">Library Catalogue</h2>
         </Col>
       </Row>
       <Row>

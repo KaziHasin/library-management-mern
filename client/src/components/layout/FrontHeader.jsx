@@ -34,7 +34,7 @@ const FrontHeader = () => {
         <Navbar.Collapse id="basic-navbar-nav">
           <Nav className="ms-auto">
             <Nav.Link as={Link} to={isTransactionHistory ? '/' : '/transaction-history'} className="text-white">
-              {isTransactionHistory ? 'Library Catalog' : 'Transaction History'}
+              {isTransactionHistory ? 'Library Catalogue' : 'Transaction History'}
             </Nav.Link>
             {userInfo ? (
               <Nav.Link onClick={logoutHandler} className="text-white">

@@ -1,12 +1,13 @@
 import { configureStore } from "@reduxjs/toolkit";
-import messageReducer from "./slices/messageSlice"
-import userReducer from "./slices/userSlice";
-import authReducer from "./slices/authSlice";
-import authProfileReducer from "./slices/authProfileSlice";
-import userAuthReducer from "./slices/userAuthSlice";
-import userTransactionSlice from "./slices/userTransactionSlice";
-import booksSlice from "./slices/booksSlice";
 import { apiSlice } from "./slices/apiSlice";
+import authProfileReducer from "./slices/authProfileSlice";
+import authReducer from "./slices/authSlice";
+import booksSlice from "./slices/booksSlice";
+import messageReducer from "./slices/messageSlice";
+import paginationHelperReducer from "./slices/paginationHelperSlice";
+import userAuthReducer from "./slices/userAuthSlice";
+import userReducer from "./slices/userSlice";
+import userTransactionSlice from "./slices/userTransactionSlice";
 
 const store = configureStore({
   reducer: {
@@ -18,6 +19,7 @@ const store = configureStore({
     userTransactions: userTransactionSlice,
     books: booksSlice,
     book: booksSlice,
+    paginationHelperData: paginationHelperReducer,
     [apiSlice.reducerPath]: apiSlice.reducer,
   },
   middleware: (getDefaultMiddleware) =>

@@ -1,17 +1,15 @@
-import { useEffect } from "react";
-import { Table, Button } from "react-bootstrap"
-import { FaEdit, FaTrash } from "react-icons/fa"
-import { Link } from "react-router-dom"
+import "datatables.net-dt/css/jquery.dataTables.min.css";
+import "datatables.net-dt/js/dataTables.dataTables";
 import 'jquery/dist/jquery.min.js';
-import "datatables.net-dt/js/dataTables.dataTables"
-import "datatables.net-dt/css/jquery.dataTables.min.css"
-import $ from 'jquery';
+import { Button, Table } from "react-bootstrap";
+import { FaEdit, FaTrash } from "react-icons/fa";
 import { useDispatch } from "react-redux";
+import { Link } from "react-router-dom";
+import { toast } from 'react-toastify';
 import { useDeleteUserMutation } from '../../../../slices/api/userApiSlice';
 import { deleteStoreUser, setSuccessMessage } from '../../../../slices/userSlice';
-import { toast } from 'react-toastify';
 
-const UserTable = ({ users }) => {
+const UserTable = ({ users, currentPage, itemsPerPage }) => {
 
   const dispatch = useDispatch();
 
@@ -40,7 +38,7 @@ const UserTable = ({ users }) => {
     }
 
   }
-
+  const startIndex = (0, currentPage - 1) * itemsPerPage;
 
   return (
     <Table responsive striped bordered hover>
@@ -57,7 +55,7 @@ const UserTable = ({ users }) => {
       <tbody>
         {users.map((user, index) => (
           <tr key={index}>
-            <td>{index + 1}</td>
+            <td>{startIndex + (index + 1)}</td>
             <td>{user.username}</td>
             <td>{user.name}</td>
             <td>{user.email}</td>

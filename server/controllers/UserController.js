@@ -7,8 +7,18 @@ const generateToken = require("../utils/generateToken");
  * */
 const getAllUsers = async (req, res) => {
   try {
-    const users = await User.find({ role: { $ne: "admin" } }).sort({ _id: -1 }).select("-password");
-    res.status(200).json(users);
+    const perPage = req.query.perPage || 5;
+    const page = req.query.page || 1;
+    const skipped = (page - 1) * perPage;
+    const countUsers = await User.countDocuments({ role: { $ne: "admin" } });
+    const totalPages = Math.ceil(countUsers / perPage);
+    const users = await User.find({ role: { $ne: "admin" } })
+      .sort({ _id: -1 })
+      .select("-password")
+      .skip(skipped)
+      .limit(perPage);
+
+    res.status(200).json({ users, totalPages, 'totalUsers': countUsers });
   } catch (error) {
     res.status(400).json({ error: error.message });
   }
