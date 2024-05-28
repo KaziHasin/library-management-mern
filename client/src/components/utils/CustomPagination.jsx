@@ -6,8 +6,6 @@ import { selectUsers } from '../../slices/userSlice';
 const CustomPagination = ({ onPageChange, currentPage, itemsPerPage }) => {
     const { totalPages, totalData } = useSelector((state) => state.paginationHelperData);
     const users = useSelector(selectUsers);
-
-    console.log(itemsPerPage);
     const handlePageClick = (number) => {
         onPageChange(number);
     }

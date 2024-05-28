@@ -5,7 +5,7 @@ export const USERS_URL = `/api/users`;
 export const userApiSlice = apiSlice.injectEndpoints({
   endpoints: (builder) => ({
     getUsers: builder.query({
-      query: (page) => `${USERS_URL}?page=${page}`,
+      query: ({ page, perPage }) => `${USERS_URL}?page=${page}&perPage=${perPage}`,
     }),
     register: builder.mutation({
       query: (data) => ({

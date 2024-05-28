@@ -7,8 +7,8 @@ const generateToken = require("../utils/generateToken");
  * */
 const getAllUsers = async (req, res) => {
   try {
-    const perPage = req.query.perPage || 5;
-    const page = req.query.page || 1;
+    const perPage = parseInt(req.query.perPage) || 5;
+    const page = parseInt(req.query.page) || 1;
     const skipped = (page - 1) * perPage;
     const countUsers = await User.countDocuments({ role: { $ne: "admin" } });
     const totalPages = Math.ceil(countUsers / perPage);
