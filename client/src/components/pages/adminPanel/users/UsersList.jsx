@@ -18,12 +18,13 @@ const UsersList = ({ showSuccess }) => {
 
   const [currentPage, setCurrentPage] = useState(1);
   const [itemsPerPage, setItemsPerPage] = useState(5);
+  const [searchTerm, setSearchTerm] = useState('');
 
   const dispatch = useDispatch();
   const users = useSelector(selectUsers);
   const message = useSelector((state) => state.message.message)
 
-  const { data: fetchedUsers, error, isLoading, refetch } = useGetUsersQuery({ page: currentPage, perPage: itemsPerPage });
+  const { data: fetchedUsers, error, isLoading, refetch } = useGetUsersQuery({ page: currentPage, perPage: itemsPerPage, searchTerm });
 
   useEffect(() => {
     if (fetchedUsers) {
@@ -54,6 +55,11 @@ const UsersList = ({ showSuccess }) => {
     setCurrentPage(1);
     refetch();
   }
+   
+  const handleSearch = (e) => {
+    setSearchTerm(e.target.value);
+  }
+
 
   if (isLoading) {
     return (
@@ -98,7 +104,7 @@ const UsersList = ({ showSuccess }) => {
                 </Form.Select>
                 <small>entries per page</small>
               </div>
-              <Form.Control type="text" placeholder="Search......" style={{ width: '230px' }} />
+              <Form.Control type="text" value={searchTerm} placeholder="Search......" style={{ width: '230px' }} onChange={handleSearch}/>
             </div>
             <UserTable users={users} currentPage={currentPage} itemsPerPage={itemsPerPage} />
             <CustomPagination onPageChange={handlePageChange} currentPage={currentPage} itemsPerPage={itemsPerPage} />

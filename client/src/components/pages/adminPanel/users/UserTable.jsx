@@ -53,7 +53,8 @@ const UserTable = ({ users, currentPage, itemsPerPage }) => {
         </tr>
       </thead>
       <tbody>
-        {users.map((user, index) => (
+      {users.length > 0 ? (
+      users.map((user, index) => (
           <tr key={index}>
             <td>{startIndex + (index + 1)}</td>
             <td>{user.username}</td>
@@ -69,7 +70,12 @@ const UserTable = ({ users, currentPage, itemsPerPage }) => {
               </Button>
             </td>
           </tr>
-        ))}
+         ))
+        ) : (
+          <tr>
+            <td colSpan="6" className="text-center">No data found</td>
+          </tr>
+        )}
       </tbody>
     </Table>
   );

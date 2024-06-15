@@ -5,7 +5,13 @@ export const USERS_URL = `/api/users`;
 export const userApiSlice = apiSlice.injectEndpoints({
   endpoints: (builder) => ({
     getUsers: builder.query({
-      query: ({ page, perPage }) => `${USERS_URL}?page=${page}&perPage=${perPage}`,
+      query: ({ page, perPage, searchTerm }) => {
+        let queryParams = `page=${page}&perPage=${perPage}`;
+        if (searchTerm) {
+          queryParams += `&searchTerm=${searchTerm}`;
+        }
+        return `${USERS_URL}?${queryParams}`;
+      },
     }),
     register: builder.mutation({
       query: (data) => ({

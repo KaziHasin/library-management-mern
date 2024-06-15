@@ -10,9 +10,22 @@ const getAllUsers = async (req, res) => {
     const perPage = parseInt(req.query.perPage) || 5;
     const page = parseInt(req.query.page) || 1;
     const skipped = (page - 1) * perPage;
-    const countUsers = await User.countDocuments({ role: { $ne: "admin" } });
+      
+    
+    const query = { role: { $ne: "admin" } };
+    
+    const searchTerm = req.query.searchTerm;
+    if(searchTerm) {
+      query.$or = [
+        {username: {$regex: searchTerm, $options: 'i'}},
+        {name: {$regex: searchTerm, $options: 'i'}},
+        {email: {$regex: searchTerm, $options: 'i'}},
+      ];
+    }
+    
+    const countUsers = await User.countDocuments(query);
     const totalPages = Math.ceil(countUsers / perPage);
-    const users = await User.find({ role: { $ne: "admin" } })
+    const users = await User.find(query)
       .sort({ _id: -1 })
       .select("-password")
       .skip(skipped)
