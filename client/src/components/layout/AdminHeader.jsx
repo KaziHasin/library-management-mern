@@ -8,20 +8,18 @@ import { useLogoutMutation } from '../../slices/api/authApiSlice';
 import { setLogout } from '../../slices/authSlice';
 import { toast } from 'react-toastify';
 
-
+ 
 const AdminHeader = ({ handleSidebar }) => {
 
   const navigate = useNavigate();
   const dispatch = useDispatch();
   const { adminInfo } = useSelector((state) => state.auth);
-  const id = adminInfo._id;
   const [Logout] = useLogoutMutation();
 
   const handleLogout = async (event) => {
     event.preventDefault();
     try {
       const res = await Logout().unwrap();
-      console.log(res);
       dispatch(setLogout())
       navigate('/admin');
     } catch (error) {
@@ -41,7 +39,7 @@ const AdminHeader = ({ handleSidebar }) => {
             <>
               <FaUserCircle />
               <NavDropdown title={adminInfo.name} id='username'>
-                <NavDropdown.Item as={Link} to={`/dashboard/profile/${id}`}><FaUserLock /> Profile</NavDropdown.Item>
+                <NavDropdown.Item as={Link} to={`/dashboard/profile/${adminInfo._id}`}><FaUserLock /> Profile</NavDropdown.Item>
                 <NavDropdown.Item onClick={handleLogout}>
                   <FaSignOutAlt /> Logout
                 </NavDropdown.Item>

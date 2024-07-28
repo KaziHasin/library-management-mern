@@ -4,14 +4,16 @@ import 'jquery/dist/jquery.min.js';
 import { Button, Table } from "react-bootstrap";
 import { FaEdit, FaTrash } from "react-icons/fa";
 import { useDispatch } from "react-redux";
-import { Link } from "react-router-dom";
+import { Link, Navigate, useNavigate } from "react-router-dom";
 import { toast } from 'react-toastify';
 import { useDeleteUserMutation } from '../../../../slices/api/userApiSlice';
-import { deleteStoreUser, setSuccessMessage } from '../../../../slices/userSlice';
+import { deleteStoreUser} from '../../../../slices/userSlice';
+import { setMessage } from '../../../../slices/messageSlice';
 
 const UserTable = ({ users, currentPage, itemsPerPage }) => {
 
   const dispatch = useDispatch();
+  const navigate = useNavigate();
 
   const [deleteUser, { isLoading }] = useDeleteUserMutation();
 
@@ -25,7 +27,7 @@ const UserTable = ({ users, currentPage, itemsPerPage }) => {
 
         if (res.data && res.data.status === 'success') {
           const message = res.data.message;
-          dispatch(setSuccessMessage(message));
+          dispatch(setMessage(message));
           dispatch(deleteStoreUser({ id: userId }));
         } else {
           toast.error('An error occurred. Please try again.');

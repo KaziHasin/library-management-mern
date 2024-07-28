@@ -43,11 +43,10 @@ const UsersList = ({ showSuccess }) => {
       dispatch(resetMessage());
       refetch();
     }
-  }, [dispatch, message]);
+  }, [dispatch, message, refetch]);
 
   const handlePageChange = (pageNumber) => {
     setCurrentPage(pageNumber);
-   
   }
 
   const handleItemsPerPageChange = (e) => {
@@ -57,7 +56,9 @@ const UsersList = ({ showSuccess }) => {
   }
    
   const handleSearch = (e) => {
+    setCurrentPage(1);
     setSearchTerm(e.target.value);
+    
   }
 
 

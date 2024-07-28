@@ -8,10 +8,9 @@ const generateToken = require("../utils/generateToken");
 const getAllUsers = async (req, res) => {
   try {
     const perPage = parseInt(req.query.perPage) || 5;
-    const page = parseInt(req.query.page) || 1;
-    const skipped = (page - 1) * perPage;
+    let page = parseInt(req.query.page) || 1;
+    let skipped = (page - 1) * perPage;
       
-    
     const query = { role: { $ne: "admin" } };
     
     const searchTerm = req.query.searchTerm;

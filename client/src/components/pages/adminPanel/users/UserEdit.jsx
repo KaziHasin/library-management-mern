@@ -4,7 +4,8 @@ import UserForm from './UserForm';
 import { Link, useParams, useNavigate } from 'react-router-dom';
 import { useSelector, useDispatch } from "react-redux";
 import { useUpdateUserMutation } from '../../../../slices/api/userApiSlice';
-import { selectUserById, updateStoreUser, setSuccessMessage } from '../../../../slices/userSlice';
+import { selectUserById, updateStoreUser } from '../../../../slices/userSlice';
+import { setMessage } from '../../../../slices/messageSlice';
 import { toast } from 'react-toastify';
 import Heading from '../../../layout/Heading';
 
@@ -27,7 +28,9 @@ const UserEdit = () => {
       if (res.data && res.data.status === 'success') {
         dispatch(updateStoreUser({ id: id, updatedUser: userData }));
         const message = res.data.message;
-        dispatch(setSuccessMessage(message));
+        const user = res.data.user;
+        dispatch(setMessage(message));
+        dispatch(addUser(user));
         navigate('/dashboard/users');
       } else {
         const validationErrors = res.error?.data;

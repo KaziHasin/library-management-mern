@@ -28,6 +28,7 @@ const userSlice = createSlice({
     },
     setSuccessMessage: (state, action) => {
       state.successMessage = action.payload;
+      console.log("User slice success", state.successMessage);
     },
   },
 });
