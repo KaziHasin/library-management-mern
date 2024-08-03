@@ -1,5 +1,11 @@
 const mongoose = require("mongoose");
 
+const categorySchema = new mongoose.Schema({
+  name: { type: String, default: "un_category" }
+});
+
+const Category = mongoose.model("Category", categorySchema);
+
 const bookSchema = new mongoose.Schema({
   name: {
     type: String,
@@ -13,12 +19,20 @@ const bookSchema = new mongoose.Schema({
     trim: true,
     minlength: [3, "Author name at least two character"],
   },
-  category: { type: String, default: "un_category" },
+  category: {
+    type: mongoose.Schema.Types.ObjectId,
+    ref: Category,
+    required: [true, "Category is required"]
+  },
   currentAvailability: { type: Boolean, default: true },
   stocks: {
     type: Number,
     required: [true, 'Number of stocks is required']
   }
+}, {
+  timestamps: true,
 });
 
-module.exports = mongoose.model("Book", bookSchema);
+const Book = mongoose.model("Book", bookSchema);
+
+module.exports = {Category, Book};

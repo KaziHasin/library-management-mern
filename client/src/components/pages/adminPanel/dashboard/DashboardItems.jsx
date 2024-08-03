@@ -17,7 +17,7 @@ const getBackgroundColorClass = (item) => {
 
 const DashboardItems = ({ item }) => {
   return (
-    <Card className={`shadow border-0 p-0 mx-0 ${getBackgroundColorClass(item.item)}`}>
+    <Card className={`shadow border-0 p-0 py-3 mx-0 ${getBackgroundColorClass(item.item)}`}>
         <Link to={item.link} className="text-decoration-none">
       <Card.Body className="d-flex justify-content-between align-items-center py-0">
         

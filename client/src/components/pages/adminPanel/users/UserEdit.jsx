@@ -1,6 +1,6 @@
 import { Container, Row, Col, Breadcrumb, Button, Card } from 'react-bootstrap';
 import { FaArrowLeft } from 'react-icons/fa';
-import UserForm from './UserForm';
+import UserForm from './components/UserForm';
 import { Link, useParams, useNavigate } from 'react-router-dom';
 import { useSelector, useDispatch } from "react-redux";
 import { useUpdateUserMutation } from '../../../../slices/api/userApiSlice';
@@ -30,7 +30,6 @@ const UserEdit = () => {
         const message = res.data.message;
         const user = res.data.user;
         dispatch(setMessage(message));
-        dispatch(addUser(user));
         navigate('/dashboard/users');
       } else {
         const validationErrors = res.error?.data;
@@ -61,14 +60,11 @@ const UserEdit = () => {
   }
   return (
     <>
+    <Container fluid>
       <Heading heading="Users" breadcrumb={<span>Dashboard <span className='fs-4'>&#8250;</span> Users <span className='fs-4'>&#8250;</span> Edit</span>} />
-      <Container className='px-md-2'>
-
-        <Row>
           <Card className="shadow-sm border-0 pt-4 pb-2 px-3">
-            <UserForm onSubmit={handleUpdateUser} user={user} buttonText="Update User" />
+            <UserForm onSubmit={handleUpdateUser} user={user} buttonText="Update" />
           </Card>
-        </Row>
       </Container>
     </>
   );

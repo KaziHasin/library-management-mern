@@ -1,8 +1,7 @@
 import { Container, Row, Col, Breadcrumb, Button, Card } from 'react-bootstrap';
-import { FaArrowLeft } from 'react-icons/fa';
-import UserForm from './UserForm';
+import UserForm from './components/UserForm';
 import { useDispatch } from 'react-redux';
-import { Link, useNavigate } from 'react-router-dom';
+import { useNavigate } from 'react-router-dom';
 import { useRegisterMutation } from '../../../../slices/api/userApiSlice';
 import { addUser } from '../../../../slices/userSlice';
 import { setMessage } from '../../../../slices/messageSlice';
@@ -56,15 +55,14 @@ const UserAdd = () => {
 
   return (
     <>
+      
+      <Container fluid>
       <Heading heading="Users" breadcrumb={<span>Dashboard <span className='fs-4'>&#8250;</span> Users <span className='fs-4'>&#8250;</span> Add</span>} />
-
-      <Container className='px-md-2'>
-
-        <Row>
+      
           <Card className="shadow-sm border-0 pt-4 pb-2 px-3">
             <UserForm onSubmit={handleAddUser} />
           </Card>
-        </Row>
+       
       </Container>
     </>
   );

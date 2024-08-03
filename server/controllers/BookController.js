@@ -1,4 +1,4 @@
-const Book = require("../models/Book");
+const {Category, Book} = require("../models/Book");
 const { createCustomError } = require("../errors/customError");
 
 /**
@@ -6,7 +6,7 @@ const { createCustomError } = require("../errors/customError");
  * @api GET api/books
  * */
 const allBooks = async (req, res) => {
-  const books = await Book.find();
+  const books = await Book.find().populate('category');
   res.send(books);
 };
 
@@ -16,7 +16,12 @@ const allBooks = async (req, res) => {
  */
 const addBook = async (req, res, next) => {
   try {
-    const book = await Book.create(req.body);
+    const categoryId = await handleCategory(req.body);
+    
+    const book = await Book.create({
+      ...req.body,
+      category: categoryId
+    });
     res.status(201).json({
       message: "New book created successfully",
       book,
@@ -80,6 +85,23 @@ const deleteBook = async (req, res) => {
     book,
   });
 };
+
+/** create category if the category id is not passed */
+const handleCategory = async (bookData) => {
+  let categoryId;
+  if (bookData.category_id) {
+     categoryId = bookData.category_id;
+  } else {
+    const existingCategory = await Category.findOne({ name: bookData.category });
+    if (existingCategory) {
+      categoryId = existingCategory._id;
+    } else {
+      const newCategory = await Category.create({ name: bookData.category || "un_category" });
+      categoryId = newCategory._id;
+    }
+  }
+  return categoryId;
+}
 
 module.exports = {
   allBooks,

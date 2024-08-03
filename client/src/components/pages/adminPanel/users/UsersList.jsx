@@ -11,7 +11,7 @@ import { addUser, resetUsers, selectUsers, } from '../../../../slices/userSlice'
 import Heading from '../../../layout/Heading';
 import CustomPagination from '../../../utils/CustomPagination';
 import Loader from '../../../utils/Loader';
-import UserTable from './UserTable';
+import UserTable from './components/UserTable';
 
 
 const UsersList = ({ showSuccess }) => {
@@ -80,7 +80,7 @@ const UsersList = ({ showSuccess }) => {
   return (
     <>
 
-      <Container className='px-md-2'>
+<Container fluid>
 
         <Heading heading="Users" breadcrumb={<span>Dashboard <span className='fs-4'>&#8250;</span> Users</span>} />
 
@@ -108,7 +108,7 @@ const UsersList = ({ showSuccess }) => {
               <Form.Control type="text" value={searchTerm} placeholder="Search......" style={{ width: '230px' }} onChange={handleSearch}/>
             </div>
             <UserTable users={users} currentPage={currentPage} itemsPerPage={itemsPerPage} />
-            <CustomPagination onPageChange={handlePageChange} currentPage={currentPage} itemsPerPage={itemsPerPage} />
+            <CustomPagination onPageChange={handlePageChange} currentPage={currentPage} itemsPerPage={itemsPerPage} dataLength={users.length} />
           </Row>
         </Card>
       </Container>

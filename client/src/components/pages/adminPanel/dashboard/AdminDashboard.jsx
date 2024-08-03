@@ -1,5 +1,5 @@
 import React, { useState } from 'react';
-import { Row, Col, Breadcrumb, Card } from 'react-bootstrap'
+import { Row, Col, Breadcrumb, Card, Container } from 'react-bootstrap'
 import { FaBook, FaUserAlt } from 'react-icons/fa';
 import { GrTransaction } from "react-icons/gr";
 import DashboardItems from './DashboardItems';
@@ -32,7 +32,8 @@ const AdminDashboard = () => {
   return (
 
     <>
-      <Heading heading="Admin Dashboard" breadcrumb="Dashboard" />
+     <Container fluid>
+     <Heading heading="Admin Dashboard" breadcrumb="Dashboard" />
       <Card className="shadow-sm border-0 pt-4 pb-2 px-3 py-3">
         <Row>
           {items.map((item) => (
@@ -43,8 +44,7 @@ const AdminDashboard = () => {
         </Row>
 
       </Card>
-
-
+     </Container>
     </>
 
   );

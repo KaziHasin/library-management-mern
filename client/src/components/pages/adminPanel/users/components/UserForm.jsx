@@ -85,7 +85,7 @@ const UserForm = ({ onSubmit, user, buttonText }) => {
           <Form.Label>Contact Number</Form.Label>
           <Form.Control
             type="number"
-            placeholder="8634834604"
+            placeholder="0000000000"
             name="contactNumber"
             value={formData.contactNumber}
             onChange={handleChange}
@@ -99,7 +99,7 @@ const UserForm = ({ onSubmit, user, buttonText }) => {
           Back
         </Button>
         <Button type="submit" className="w-auto">
-          {buttonText ?? 'Add User'}
+          {buttonText ?? 'Create'}
         </Button>
       </Row>
     </Form>

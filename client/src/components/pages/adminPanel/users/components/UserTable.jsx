@@ -6,9 +6,9 @@ import { FaEdit, FaTrash } from "react-icons/fa";
 import { useDispatch } from "react-redux";
 import { Link, Navigate, useNavigate } from "react-router-dom";
 import { toast } from 'react-toastify';
-import { useDeleteUserMutation } from '../../../../slices/api/userApiSlice';
-import { deleteStoreUser} from '../../../../slices/userSlice';
-import { setMessage } from '../../../../slices/messageSlice';
+import { useDeleteUserMutation } from '../../../../../slices/api/userApiSlice';
+import { deleteStoreUser} from '../../../../../slices/userSlice';
+import { setMessage } from '../../../../../slices/messageSlice';
 
 const UserTable = ({ users, currentPage, itemsPerPage }) => {
 

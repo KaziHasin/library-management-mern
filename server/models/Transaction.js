@@ -9,6 +9,8 @@ const transactionSchema = new mongoose.Schema({
     enum: ["borrow", "returned"],
     required: true,
   },
+},{
+  timestamps: true,
 });
 
 module.exports = mongoose.model("Transaction", transactionSchema);

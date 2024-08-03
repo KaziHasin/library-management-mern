@@ -1,17 +1,17 @@
 import React from 'react';
 import { Pagination } from 'react-bootstrap';
 import { useSelector } from 'react-redux';
-import { selectUsers } from '../../slices/userSlice';
 
-const CustomPagination = ({ onPageChange, currentPage, itemsPerPage }) => {
+const CustomPagination = ({ onPageChange, currentPage, itemsPerPage, dataLength }) => {
     const { totalPages, totalData } = useSelector((state) => state.paginationHelperData);
-    const users = useSelector(selectUsers);
+    
     const handlePageClick = (number) => {
         onPageChange(number);
     }
-    const startIndex = (0, currentPage - 1) * itemsPerPage;
+    let startIndex = (0, currentPage - 1) * itemsPerPage;
+    
     const distanceEntry = itemsPerPage * currentPage;
-    const toEntry = itemsPerPage === users.length ? distanceEntry : distanceEntry - (itemsPerPage - users.length);
+    const toEntry = itemsPerPage === dataLength ? distanceEntry : distanceEntry - (itemsPerPage - dataLength);
 
     let items = [];
     for (let number = 1; number <= totalPages; number++) {
@@ -21,9 +21,10 @@ const CustomPagination = ({ onPageChange, currentPage, itemsPerPage }) => {
             </Pagination.Item>
         );
     }
+    startIndex = totalData !== 0 ? startIndex + 1 : startIndex;
     return (
         <div className="d-flex justify-content-between mt-2">
-            <div>Showing {startIndex + 1} to {toEntry} of {totalData} entries</div>
+            <div>Showing {startIndex} to {toEntry} of {totalData} entries</div>
             <Pagination>{items}</Pagination>
         </div>
     )
