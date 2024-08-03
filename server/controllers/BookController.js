@@ -6,8 +6,8 @@ const { createCustomError } = require("../errors/customError");
  * @api GET api/books
  * */
 const allBooks = async (req, res) => {
-  const books = await Book.find().populate('category');
-  res.send(books);
+  const books = await Book.find().populate('category'); 
+  res.send(books); 
 };
 
 /***

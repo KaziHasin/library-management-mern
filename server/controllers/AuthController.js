@@ -95,7 +95,7 @@ const adminProfilePhotoUpdate = async (req, res) => {
     // file uploads 
     const storage = multer.diskStorage({
       destination: function (req, file, cb) {
-        cb(null, 'server/uploads/admin');
+        cb(null, 'server/uploads/admin'); 
       },
       filename: function (req, file, cb) {
         const extension = path.extname(file.originalname);
