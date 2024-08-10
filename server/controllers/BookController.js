@@ -37,7 +37,7 @@ const addBook = async (req, res, next) => {
  */
 const getBook = async (req, res, next) => {
   const { id } = req.params;
-  const book = await Book.findOne({ _id: id });
+  const book = await Book.findOne({ _id: id }).populate('category');
   if (!book) {
     res.status(404).json({ message: "Book not found" });
   }
@@ -85,7 +85,6 @@ const deleteBook = async (req, res) => {
     book,
   });
 };
-
 /** create category if the category id is not passed */
 const handleCategory = async (bookData) => {
   let categoryId;
@@ -96,13 +95,12 @@ const handleCategory = async (bookData) => {
     if (existingCategory) {
       categoryId = existingCategory._id;
     } else {
-      const newCategory = await Category.create({ name: bookData.category || "un_category" });
+      const newCategory = await Category.create({ name: bookData.category });
       categoryId = newCategory._id;
     }
   }
   return categoryId;
 }
-
 module.exports = {
   allBooks,
   addBook,

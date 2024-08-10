@@ -6,6 +6,8 @@ import AdminHeader from './AdminHeader';
 import AdminSidebar from './AdminSideBar';
 import AdminDashboard from '../pages/adminPanel/dashboard/AdminDashboard';
 import UsersList from '../pages/adminPanel/users/UsersList';
+import BookList from '../pages/adminPanel/books/BookList';
+import BookAdd from '../pages/adminPanel/books/BookAdd';
 import UserAdd from '../pages/adminPanel/users/UserAdd';
 import UserEdit from '../pages/adminPanel/users/UserEdit';
 import PrivateRoutes from '../privates/AdminPanelPrivateRoutes';
@@ -39,6 +41,8 @@ const AdminLayout = () => {
                 <Route path="/users" element={<UsersList />} />
                 <Route path="/users/add" element={<UserAdd />} />
                 <Route path="/users/edit/:id" element={<UserEdit />} />
+                <Route path="/books" element={<BookList />} />
+                <Route path="/books/add" element={<BookAdd />} />
               </Route>
             </Routes>
           </Col>

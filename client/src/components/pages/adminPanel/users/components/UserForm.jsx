@@ -11,6 +11,8 @@ const UserForm = ({ onSubmit, user, buttonText }) => {
   };
 
   const [formData, setFormData] = useState(initialFormData);
+  const [validated, setValidated] = useState(false);
+
 
   useEffect(() => {
     if (user) {
@@ -18,7 +20,6 @@ const UserForm = ({ onSubmit, user, buttonText }) => {
     }
   }, [user]);
 
-  const [validated, setValidated] = useState(false);
 
   const handleChange = (event) => {
     const { name, value } = event.target;

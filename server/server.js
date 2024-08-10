@@ -4,7 +4,8 @@ const app = express();
 const books = require("./routes/books");
 const users = require("./routes/users");
 const auth = require("./routes/auth");
-const transaction = require("./routes/transaction");
+const transactions = require("./routes/transactions");
+const categories = require("./routes/categories");
 const dotenv = require("dotenv");
 const cookieParser = require("cookie-parser");
 dotenv.config();
@@ -31,7 +32,8 @@ app.get("/", (req, res) => {
 app.use("/api/books", books);
 app.use("/api/users", users);
 app.use("/api/auth", auth);
-app.use("/api/transactions", transaction);
+app.use("/api/transactions", transactions);
+app.use("/api/categories", categories);
 
 app.use(notFound);
 

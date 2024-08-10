@@ -1,4 +1,4 @@
-import { Container, Row, Col, Breadcrumb, Button, Card } from 'react-bootstrap';
+import { Container } from 'react-bootstrap';
 import UserForm from './components/UserForm';
 import { useDispatch } from 'react-redux';
 import { useNavigate } from 'react-router-dom';
@@ -7,6 +7,7 @@ import { addUser } from '../../../../slices/userSlice';
 import { setMessage } from '../../../../slices/messageSlice';
 import { toast } from 'react-toastify';
 import Heading from '../../../layout/Heading';
+import CustomCard from '../../../utils/CustomCard';
 
 const UserAdd = () => {
   const navigate = useNavigate();
@@ -55,14 +56,13 @@ const UserAdd = () => {
 
   return (
     <>
-      
+
       <Container fluid>
-      <Heading heading="Users" breadcrumb={<span>Dashboard <span className='fs-4'>&#8250;</span> Users <span className='fs-4'>&#8250;</span> Add</span>} />
-      
-          <Card className="shadow-sm border-0 pt-4 pb-2 px-3">
-            <UserForm onSubmit={handleAddUser} />
-          </Card>
-       
+        <Heading heading="Users" breadcrumb={<span>Dashboard <span className='fs-4'>&#8250;</span> Users <span className='fs-4'>&#8250;</span> Add</span>} />
+        <CustomCard>
+          <UserForm onSubmit={handleAddUser} />
+        </CustomCard>
+
       </Container>
     </>
   );

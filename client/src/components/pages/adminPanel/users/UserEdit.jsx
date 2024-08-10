@@ -1,5 +1,4 @@
-import { Container, Row, Col, Breadcrumb, Button, Card } from 'react-bootstrap';
-import { FaArrowLeft } from 'react-icons/fa';
+import { Container } from 'react-bootstrap';
 import UserForm from './components/UserForm';
 import { Link, useParams, useNavigate } from 'react-router-dom';
 import { useSelector, useDispatch } from "react-redux";
@@ -8,6 +7,7 @@ import { selectUserById, updateStoreUser } from '../../../../slices/userSlice';
 import { setMessage } from '../../../../slices/messageSlice';
 import { toast } from 'react-toastify';
 import Heading from '../../../layout/Heading';
+import CustomCard from '../../../utils/CustomCard';
 
 
 const UserEdit = () => {
@@ -62,9 +62,9 @@ const UserEdit = () => {
     <>
     <Container fluid>
       <Heading heading="Users" breadcrumb={<span>Dashboard <span className='fs-4'>&#8250;</span> Users <span className='fs-4'>&#8250;</span> Edit</span>} />
-          <Card className="shadow-sm border-0 pt-4 pb-2 px-3">
+          <CustomCard>
             <UserForm onSubmit={handleUpdateUser} user={user} buttonText="Update" />
-          </Card>
+          </CustomCard>
       </Container>
     </>
   );
