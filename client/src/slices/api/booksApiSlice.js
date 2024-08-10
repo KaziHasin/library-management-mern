@@ -1,5 +1,5 @@
 import { apiSlice } from "../apiSlice";
-const BOOKS_URL = `/api/books`
+const BOOKS_URL = `/api/books`;
 
 export const booksApiSlice = apiSlice.injectEndpoints({
     endpoints: (build) => ({
@@ -13,11 +13,18 @@ export const booksApiSlice = apiSlice.injectEndpoints({
                 method: "GET",
             }),
         }),
-    })
-
-})
+        createBook: build.mutation({
+            query: (data) => ({
+                url: `${BOOKS_URL}`,
+                method: "POST",
+                body: data,
+            }),
+        }),
+    }),
+});
 
 export const {
     useGetBookListQuery,
-    useGetBookByIdMutation
+    useGetBookByIdMutation,
+    useCreateBookMutation,
 } = booksApiSlice;

@@ -1,6 +1,6 @@
 import { apiSlice } from "../apiSlice";
 
-const CATEGORY_URL = 'http://localhost:4000/api/categories/'
+const CATEGORY_URL = "/api/categories/";
 
 export const categoryApiSlice = apiSlice.injectEndpoints({
     endpoints: (builder) => ({
@@ -10,6 +10,4 @@ export const categoryApiSlice = apiSlice.injectEndpoints({
     }),
 });
 
-export const {
-    useGetCategoriesQuery
-} = categoryApiSlice;
+export const { useGetCategoriesQuery } = categoryApiSlice;

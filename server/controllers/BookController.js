@@ -1,4 +1,4 @@
-const {Category, Book} = require("../models/Book");
+const { Category, Book } = require("../models/Book");
 const { createCustomError } = require("../errors/customError");
 
 /**
@@ -6,8 +6,8 @@ const { createCustomError } = require("../errors/customError");
  * @api GET api/books
  * */
 const allBooks = async (req, res) => {
-  const books = await Book.find().populate('category'); 
-  res.send(books); 
+    const books = await Book.find().populate("category");
+    res.send(books);
 };
 
 /***
@@ -15,20 +15,20 @@ const allBooks = async (req, res) => {
  * @api POST api/books
  */
 const addBook = async (req, res, next) => {
-  try {
-    const categoryId = await handleCategory(req.body);
-    
-    const book = await Book.create({
-      ...req.body,
-      category: categoryId
-    });
-    res.status(201).json({
-      message: "New book created successfully",
-      book,
-    });
-  } catch (error) {
-    res.status(400).json({ error: error.message });
-  }
+    try {
+        const categoryId = await handleCategory(req.body);
+
+        const book = await Book.create({
+            ...req.body,
+            category: categoryId,
+        });
+        res.status(201).json({
+            message: "New book created successfully",
+            book,
+        });
+    } catch (error) {
+        res.status(400).json({ error: error.message });
+    }
 };
 
 /***
@@ -36,12 +36,12 @@ const addBook = async (req, res, next) => {
  * @api GET api/books/:id
  */
 const getBook = async (req, res, next) => {
-  const { id } = req.params;
-  const book = await Book.findOne({ _id: id }).populate('category');
-  if (!book) {
-    res.status(404).json({ message: "Book not found" });
-  }
-  res.status(200).json({ book });
+    const { id } = req.params;
+    const book = await Book.findOne({ _id: id }).populate("category");
+    if (!book) {
+        res.status(404).json({ message: "Book not found" });
+    }
+    res.status(200).json({ book });
 };
 
 /***
@@ -49,24 +49,24 @@ const getBook = async (req, res, next) => {
  * @api PUT api/books/:id
  */
 const updateBook = async (req, res) => {
-  try {
-    const { id } = req.params;
+    try {
+        const { id } = req.params;
 
-    const book = await Book.findByIdAndUpdate({ _id: id }, req.body, {
-      new: true,
-      runValidators: true,
-    });
+        const book = await Book.findByIdAndUpdate({ _id: id }, req.body, {
+            new: true,
+            runValidators: true,
+        });
 
-    if (!book) {
-      res.status(404).json({ message: "Book not found" });
+        if (!book) {
+            res.status(404).json({ message: "Book not found" });
+        }
+        res.status(200).json({
+            message: "Book updated successfully",
+            book,
+        });
+    } catch (error) {
+        res.status(400).json({ error: error.message });
     }
-    res.status(200).json({
-      message: "Book updated successfully",
-      book,
-    });
-  } catch (error) {
-    res.status(400).json({ error: error.message });
-  }
 };
 
 /***
@@ -74,37 +74,41 @@ const updateBook = async (req, res) => {
  * @api DELETE api/books/:id
  */
 const deleteBook = async (req, res) => {
-  const { id } = req.params;
+    const { id } = req.params;
 
-  const book = await Book.findOneAndDelete({ _id: id });
-  if (!book) {
-    res.status(404).json({ message: "Book not found" });
-  }
-  res.status(200).json({
-    message: "Book deleted successfully",
-    book,
-  });
+    const book = await Book.findOneAndDelete({ _id: id });
+    if (!book) {
+        res.status(404).json({ message: "Book not found" });
+    }
+    res.status(200).json({
+        message: "Book deleted successfully",
+        book,
+    });
 };
 /** create category if the category id is not passed */
 const handleCategory = async (bookData) => {
-  let categoryId;
-  if (bookData.category_id) {
-     categoryId = bookData.category_id;
-  } else {
-    const existingCategory = await Category.findOne({ name: bookData.category });
-    if (existingCategory) {
-      categoryId = existingCategory._id;
+    let categoryId;
+    if (bookData.category_id) {
+        categoryId = bookData.category_id;
     } else {
-      const newCategory = await Category.create({ name: bookData.category });
-      categoryId = newCategory._id;
+        const existingCategory = await Category.findOne({
+            name: bookData.category,
+        });
+        if (existingCategory) {
+            categoryId = existingCategory._id;
+        } else {
+            const newCategory = await Category.create({
+                name: bookData.category,
+            });
+            categoryId = newCategory._id;
+        }
     }
-  }
-  return categoryId;
-}
+    return categoryId;
+};
 module.exports = {
-  allBooks,
-  addBook,
-  getBook,
-  updateBook,
-  deleteBook,
+    allBooks,
+    addBook,
+    getBook,
+    updateBook,
+    deleteBook,
 };
