@@ -2,7 +2,7 @@ import React, { useState } from "react";
 import { Row, Col, Form, Button } from "react-bootstrap";
 import { Link } from "react-router-dom";
 
-const BookForm = ({ categories, onSubmit }) => {
+const BookForm = ({ categories, onSubmit, buttonText }) => {
     const initialFormData = {
         name: "",
         author: "",
@@ -13,7 +13,6 @@ const BookForm = ({ categories, onSubmit }) => {
     };
 
     const [formData, setFormData] = useState(initialFormData);
-    const [validated, setValidated] = useState(false);
     const [showCategoryText, setShowCategoryText] = useState(false);
 
     const handleChange = (event) => {
@@ -35,7 +34,7 @@ const BookForm = ({ categories, onSubmit }) => {
     };
 
     return (
-        <Form noValidate validated={validated} onSubmit={handleSubmit}>
+        <Form onSubmit={handleSubmit}>
             <Row className="mb-3">
                 <Form.Group as={Col} md="6" controlId="validationCustom01">
                     <Form.Label>Name</Form.Label>
@@ -137,7 +136,7 @@ const BookForm = ({ categories, onSubmit }) => {
                     Back
                 </Button>
                 <Button type="submit" className="w-auto">
-                    Create
+                    {buttonText ?? "Create"}
                 </Button>
             </Row>
         </Form>

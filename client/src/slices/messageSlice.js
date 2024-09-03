@@ -5,8 +5,7 @@ const initialState = {
 };
 
 const messageSlice = createSlice({
-
-    name: 'message',
+    name: "message",
     initialState,
 
     reducers: {
@@ -15,10 +14,9 @@ const messageSlice = createSlice({
         },
         resetMessage: (state) => {
             state.message = null;
-        }
-    }
-
-})
+        },
+    },
+});
 
 export const { setMessage, resetMessage } = messageSlice.actions;
 export default messageSlice.reducer;

@@ -4,7 +4,10 @@ const BOOKS_URL = `/api/books`;
 export const booksApiSlice = apiSlice.injectEndpoints({
     endpoints: (build) => ({
         getBookList: build.query({
-            query: () => BOOKS_URL,
+            query: ({ page, perPage, searchTerm }) => {
+                const queryParams = `page=${page}&perPage=${perPage}&searchTerm=${searchTerm}`;
+                return `${BOOKS_URL}?${queryParams}`;
+            },
         }),
 
         getBookById: build.mutation({

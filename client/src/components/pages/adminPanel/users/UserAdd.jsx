@@ -1,71 +1,79 @@
-import { Container } from 'react-bootstrap';
-import UserForm from './components/UserForm';
-import { useDispatch } from 'react-redux';
-import { useNavigate } from 'react-router-dom';
-import { useRegisterMutation } from '../../../../slices/api/userApiSlice';
-import { addUser } from '../../../../slices/userSlice';
-import { setMessage } from '../../../../slices/messageSlice';
-import { toast } from 'react-toastify';
-import Heading from '../../../layout/Heading';
-import CustomCard from '../../../utils/CustomCard';
+import { Container } from "react-bootstrap";
+import UserForm from "./components/UserForm";
+import { useDispatch } from "react-redux";
+import { useNavigate } from "react-router-dom";
+import { useRegisterMutation } from "../../../../slices/api/userApiSlice";
+import { addUser } from "../../../../slices/userSlice";
+import { setMessage } from "../../../../slices/messageSlice";
+
+import { toast } from "react-toastify";
+import Heading from "../../../layout/Heading";
+import CustomCard from "../../../utils/CustomCard";
 
 const UserAdd = () => {
-  const navigate = useNavigate();
-  const dispatch = useDispatch();
-  const [register, { isLoading }] = useRegisterMutation();
+    const navigate = useNavigate();
+    const dispatch = useDispatch();
+    const [register, { isLoading }] = useRegisterMutation();
 
-  const handleAddUser = async (userData) => {
-    try {
-      const res = await register(userData);
+    const handleAddUser = async (userData) => {
+        try {
+            const res = await register(userData);
 
-      if (res.data && res.data.status === 'success') {
-        const message = res.data.message;
-        const user = res.data.user;
-        dispatch(setMessage(message));
-        dispatch(addUser(user));
-        navigate('/dashboard/users');
-      } else {
-        const validationErrors = res.error?.data;
+            if (res.data && res.data.status === "success") {
+                const message = res.data.message;
+                const user = res.data.user;
+                dispatch(setMessage(message));
+                dispatch(addUser(user));
+                navigate("/dashboard/users");
+            } else {
+                const validationErrors = res.error?.data;
 
-        if (validationErrors) {
-          const isDuplicateEmail = validationErrors.error?.includes('email_1 dup key');
+                if (validationErrors) {
+                    const isDuplicateEmail =
+                        validationErrors.error?.includes("email_1 dup key");
 
-          if (isDuplicateEmail) {
-            toast.error('Email is already in use.');
-          } else {
-            // Display other validation errors
-            Object.keys(validationErrors).forEach((field) => {
-              let errorMessage = validationErrors[field];
-              const colonIndex = errorMessage.indexOf(':');
-              errorMessage = errorMessage.slice(colonIndex + 1).trim();
-              toast.error(errorMessage);
-            });
-          }
-        } else {
-          // Handle other error scenarios
-          toast.error('An error occurred. Please try again.');
+                    if (isDuplicateEmail) {
+                        toast.error("Email is already in use.");
+                    } else {
+                        // Display other validation errors
+                        Object.keys(validationErrors).forEach((field) => {
+                            let errorMessage = validationErrors[field];
+                            const colonIndex = errorMessage.indexOf(":");
+                            errorMessage = errorMessage
+                                .slice(colonIndex + 1)
+                                .trim();
+                            toast.error(errorMessage);
+                        });
+                    }
+                } else {
+                    // Handle other error scenarios
+                    toast.error("An error occurred. Please try again.");
+                }
+            }
+        } catch (err) {
+            console.log(err);
+            toast.error("An error occurred. Please try again.");
         }
-      }
-    } catch (err) {
-      console.log(err);
-      toast.error('An error occurred. Please try again.');
-    }
-  };
+    };
 
-
-
-  return (
-    <>
-
-      <Container fluid>
-        <Heading heading="Users" breadcrumb={<span>Dashboard <span className='fs-4'>&#8250;</span> Users <span className='fs-4'>&#8250;</span> Add</span>} />
-        <CustomCard>
-          <UserForm onSubmit={handleAddUser} />
-        </CustomCard>
-
-      </Container>
-    </>
-  );
+    return (
+        <>
+            <Container fluid>
+                <Heading
+                    heading="Users"
+                    breadcrumb={
+                        <span>
+                            Dashboard <span className="fs-4">&#8250;</span>{" "}
+                            Users <span className="fs-4">&#8250;</span> Add
+                        </span>
+                    }
+                />
+                <CustomCard>
+                    <UserForm onSubmit={handleAddUser} />
+                </CustomCard>
+            </Container>
+        </>
+    );
 };
 
 export default UserAdd;

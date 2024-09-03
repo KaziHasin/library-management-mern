@@ -1,13 +1,37 @@
 const { Category, Book } = require("../models/Book");
 const { createCustomError } = require("../errors/customError");
+const { getPaginationParams } = require("../utils/utils");
 
 /**
  * get all the books
  * @api GET api/books
  * */
 const allBooks = async (req, res) => {
-    const books = await Book.find().populate("category");
-    res.send(books);
+    try {
+        // get the reusable pagination function from utils.
+        const { perPage, skipped, searchTerm } = getPaginationParams(req);
+
+        let query = {};
+
+        if (searchTerm) {
+            query.$or = [
+                { name: { $regex: searchTerm, $options: "i" } },
+                { author: { $regex: searchTerm, $options: "i" } },
+            ];
+        }
+
+        const countBooks = await Book.countDocuments(query);
+        const totalPages = Math.ceil(countBooks / perPage);
+        const books = await Book.find(query)
+            .sort({ _id: -1 })
+            .skip(skipped)
+            .limit(perPage)
+            .populate("category");
+
+        res.send({ books, totalPages, totalBooks: countBooks });
+    } catch (error) {
+        res.status(400).json({ error: error.message });
+    }
 };
 
 /***
@@ -23,6 +47,7 @@ const addBook = async (req, res, next) => {
             category: categoryId,
         });
         res.status(201).json({
+            status: "success",
             message: "New book created successfully",
             book,
         });

@@ -1,56 +1,51 @@
 import React, { useEffect, useState } from "react";
-import { Button, Col, Container, Row, Form } from "react-bootstrap";
+import { Button, Col, Container, Form, Row } from "react-bootstrap";
+import Heading from "../../../layout/Heading";
+import CustomCard from "../../../utils/CustomCard";
+import { Link } from "react-router-dom";
 import { FaPlus } from "react-icons/fa";
 import { useDispatch, useSelector } from "react-redux";
-import { Link } from "react-router-dom";
-import withToast from "../../../../hoc/withToast";
-import { useGetUsersQuery } from "../../../../slices/api/userApiSlice";
 import { resetMessage } from "../../../../slices/messageSlice";
+import withToast from "../../../../hoc/withToast";
+import BookTable from "./components/BookTable";
+import { useGetBookListQuery } from "../../../../slices/api/booksApiSlice";
+import Loader from "../../../utils/Loader";
+import ServerError from "../../../../errors/ServerError";
+import { resetBooks, setBooks } from "../../../../slices/booksSlice";
 import {
     setTotalData,
     setTotalPages,
 } from "../../../../slices/paginationHelperSlice";
-import {
-    resetUsers,
-    selectUsers,
-    setUsers,
-} from "../../../../slices/userSlice";
-import Heading from "../../../layout/Heading";
 import CustomPagination from "../../../utils/CustomPagination";
-import Loader from "../../../utils/Loader";
-import UserTable from "./components/UserTable";
-import CustomCard from "../../../utils/CustomCard";
-import ServerError from "../../../../errors/ServerError";
 import ItemsPerPageSelect from "../../../utils/ItemsPerPageSelect";
 
-const UsersList = ({ showSuccess }) => {
+const BooksList = ({ showSuccess }) => {
     const [currentPage, setCurrentPage] = useState(1);
     const [itemsPerPage, setItemsPerPage] = useState(5);
     const [searchTerm, setSearchTerm] = useState("");
 
     const dispatch = useDispatch();
-    const users = useSelector(selectUsers);
+    const books = useSelector((state) => state.books.books);
     const message = useSelector((state) => state.message.message);
 
     const {
-        data: fetchedUsers,
+        data: fetchedBooks,
         error,
         isLoading,
         refetch,
-    } = useGetUsersQuery({
+    } = useGetBookListQuery({
         page: currentPage,
         perPage: itemsPerPage,
         searchTerm,
     });
-
     useEffect(() => {
-        if (fetchedUsers) {
-            dispatch(resetUsers());
-            dispatch(setTotalPages({ totalPages: fetchedUsers.totalPages }));
-            dispatch(setTotalData({ totalData: fetchedUsers.totalUsers }));
-            dispatch(setUsers(fetchedUsers.users));
+        if (fetchedBooks) {
+            dispatch(resetBooks());
+            dispatch(setTotalPages({ totalPages: fetchedBooks.totalPages }));
+            dispatch(setTotalData({ totalData: fetchedBooks.totalBooks }));
+            dispatch(setBooks(fetchedBooks.books));
         }
-    }, [fetchedUsers, dispatch]);
+    }, [fetchedBooks, dispatch]);
 
     useEffect(() => {
         if (message) {
@@ -72,6 +67,7 @@ const UsersList = ({ showSuccess }) => {
 
     const handleSearch = (e) => {
         setCurrentPage(1);
+
         setSearchTerm(e.target.value);
     };
 
@@ -90,29 +86,26 @@ const UsersList = ({ showSuccess }) => {
         <>
             <Container fluid>
                 <Heading
-                    heading="Users"
+                    heading="Books"
                     breadcrumb={
                         <span>
                             Dashboard <span className="fs-4">&#8250;</span>{" "}
-                            Users
+                            Books
                         </span>
                     }
                 />
-
                 <CustomCard>
                     <Row className="my-2">
                         <Col>
                             <Button
                                 variant="primary"
                                 as={Link}
-                                to="/dashboard/users/add"
+                                to="/dashboard/books/add"
                                 className="float-end"
                             >
                                 <FaPlus /> Add
                             </Button>
                         </Col>
-                    </Row>
-                    <Row>
                         <div className="d-flex justify-content-between my-3">
                             <ItemsPerPageSelect
                                 itemsPerPage={itemsPerPage}
@@ -126,8 +119,9 @@ const UsersList = ({ showSuccess }) => {
                                 onChange={handleSearch}
                             />
                         </div>
-                        <UserTable
-                            users={users}
+
+                        <BookTable
+                            books={books}
                             currentPage={currentPage}
                             itemsPerPage={itemsPerPage}
                         />
@@ -135,7 +129,7 @@ const UsersList = ({ showSuccess }) => {
                             onPageChange={handlePageChange}
                             currentPage={currentPage}
                             itemsPerPage={itemsPerPage}
-                            dataLength={users.length}
+                            dataLength={books.length}
                         />
                     </Row>
                 </CustomCard>
@@ -144,4 +138,4 @@ const UsersList = ({ showSuccess }) => {
     );
 };
 
-export default withToast(UsersList);
+export default withToast(BooksList);
