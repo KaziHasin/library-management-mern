@@ -76,16 +76,21 @@ const getBook = async (req, res, next) => {
 const updateBook = async (req, res) => {
     try {
         const { id } = req.params;
-
-        const book = await Book.findByIdAndUpdate({ _id: id }, req.body, {
-            new: true,
-            runValidators: true,
-        });
+        const categoryId = await handleCategory(req.body);
+        const book = await Book.findByIdAndUpdate(
+            { _id: id },
+            { ...req.body, category: categoryId },
+            {
+                new: true,
+                runValidators: true,
+            }
+        );
 
         if (!book) {
             res.status(404).json({ message: "Book not found" });
         }
         res.status(200).json({
+            status: "success",
             message: "Book updated successfully",
             book,
         });
@@ -106,6 +111,7 @@ const deleteBook = async (req, res) => {
         res.status(404).json({ message: "Book not found" });
     }
     res.status(200).json({
+        status: "success",
         message: "Book deleted successfully",
         book,
     });

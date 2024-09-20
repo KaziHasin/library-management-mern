@@ -6,25 +6,25 @@ import { FaEdit, FaTrash } from "react-icons/fa";
 import { useDispatch } from "react-redux";
 import { Link, Navigate, useNavigate } from "react-router-dom";
 import { toast } from "react-toastify";
-import { useDeleteUserMutation } from "../../../../../slices/api/userApiSlice";
-import { deleteStoreUser } from "../../../../../slices/userSlice";
 import { setMessage } from "../../../../../slices/messageSlice";
+import { useDeleteBookMutation } from "../../../../../slices/api/booksApiSlice";
+import { deleteStoreBook } from "../../../../../slices/booksSlice";
 
 const BookTable = ({ books, currentPage, itemsPerPage }) => {
     const dispatch = useDispatch();
     const navigate = useNavigate();
 
-    const [deleteUser, { isLoading }] = useDeleteUserMutation();
+    const [deleteBook, { isLoading }] = useDeleteBookMutation();
 
     const deleteBookHandler = async (bookId) => {
         if (confirm("Are you sure want to delete this book?")) {
             try {
-                const res = await deleteUser(bookId);
+                const res = await deleteBook(bookId);
 
-                if (res.data && res.data.status === "success") {
+                if (res.data.status === "success") {
                     const message = res.data.message;
                     dispatch(setMessage(message));
-                    dispatch(deleteStoreUser({ id: bookId }));
+                    dispatch(deleteStoreBook({ id: bookId }));
                 } else {
                     toast.error("An error occurred. Please try again.");
                 }

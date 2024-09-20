@@ -1,8 +1,8 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import { Row, Col, Form, Button } from "react-bootstrap";
 import { Link } from "react-router-dom";
 
-const BookForm = ({ categories, onSubmit, buttonText }) => {
+const BookForm = ({ categories, book, onSubmit, buttonText }) => {
     const initialFormData = {
         name: "",
         author: "",
@@ -11,6 +11,16 @@ const BookForm = ({ categories, onSubmit, buttonText }) => {
         category_id: "",
         category: "",
     };
+
+    useEffect(() => {
+        if (book) {
+            setFormData({
+                ...book,
+                category: null,
+                category_id: book.category?._id,
+            });
+        }
+    }, [book]);
 
     const [formData, setFormData] = useState(initialFormData);
     const [showCategoryText, setShowCategoryText] = useState(false);
@@ -28,7 +38,6 @@ const BookForm = ({ categories, onSubmit, buttonText }) => {
     };
 
     const handleSubmit = (event) => {
-        const form = event.currentTarget;
         event.preventDefault();
         onSubmit(formData);
     };
@@ -130,7 +139,7 @@ const BookForm = ({ categories, onSubmit, buttonText }) => {
                 <Button
                     variant="dark"
                     as={Link}
-                    to="/dashboard/users"
+                    to="/dashboard/books"
                     className="w-auto me-2"
                 >
                     Back
